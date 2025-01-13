@@ -18,7 +18,26 @@ public class MyController {
 
     @RequestMapping("sayHello")
     @ResponseBody
-    public String returnGreeting(@RequestParam (name="") String firstName) {
+    public String returnGreeting(@RequestParam (name="nimesi") String firstName) {
         return "Hello " + firstName + "!";
     }
+
+    @RequestMapping("/index")
+    @ResponseBody
+    public String mainPageGreeting() {
+        return "This is the main page";
+    }
+
+    @RequestMapping("/contact")
+    @ResponseBody
+    public String contactPageGreeting() {
+        return "This is the contact page";
+    }
+
+    @RequestMapping("hello")
+    @ResponseBody
+    public String returnHelloGreeting(@RequestParam (name="location") String location, @RequestParam (name="name") String name) {
+        return "Welcome to the " + location + " " + name + "!";
+    }
+
 }
