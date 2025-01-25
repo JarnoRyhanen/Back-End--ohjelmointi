@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       
+        <form action="#" th:action="@{/friends}" th:object="${friend}" method="post">
+  
+            <h2>Add new friend to list</h2>
+            <table>
+                <tr>
+                    <td>First name: <input type="text" th:field="*{firstName}" /></td>
+                    <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Error</td>
+                </tr>
+                <tr>
+                    <td>Last name: <input type="text" th:field="*{lastName}" /></td>
+                    <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Error</td>
+                </tr>
+            </table>
+            <p><input type="submit" value="Add friend" /></p>
+        </form>
+        
+    </body>
+</html>

@@ -11,6 +11,9 @@
             <td th:text="${friend.lastName}"></td>
         </tr>
     </table>
+
+    <p><a th:href="@{/add}">Add friend</a></p>
+
     <form action="#" th:action="@{/friends}" th:object="${friend}" method="post">
   
 
@@ -25,7 +28,7 @@
                 <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Error</td>
             </tr>
         </table>
-        <p><input type="submit" value="Submit" /></p>
+        <p><input type="submit" value="Add friend" /></p>
     </form>
 </body>
 </html>
