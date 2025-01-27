@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>publication Year</th>
+            <th>Isbn</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.publicationYear}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td th:text="${book.price}"></td>
+            
+        </tr>
+    </table>
+
+</body>
+
+</html>
