@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import home.jarnobookstore.domain.Book;
 import home.jarnobookstore.domain.BookRepository;
+import home.jarnobookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+    
+    @Autowired 
+    private CategoryRepository categoryRepository;
 
     public BookController(BookRepository repository) {
         this.bookRepository = repository;
@@ -37,6 +41,7 @@ public class BookController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "add";
     }
 
@@ -56,6 +61,7 @@ public class BookController {
     @RequestMapping(value= "/edit/{id}", method=RequestMethod.GET)
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", bookRepository.findById(bookId));
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
 }
