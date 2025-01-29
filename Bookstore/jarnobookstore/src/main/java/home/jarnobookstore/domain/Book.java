@@ -24,6 +24,15 @@ public class Book {
         this.isbn = isbn;
         this.price = price;
     }
+    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public Book() {
         super();
@@ -71,7 +80,8 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear + ", isbn=" + isbn
-                + ", price=" + price + "]";
+        return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", publicationYear="
+                + publicationYear + ", price=" + price + "]";
     }
+
 }
