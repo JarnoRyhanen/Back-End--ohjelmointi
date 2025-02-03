@@ -1,6 +1,7 @@
 package home.jarnobookstore.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,12 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
-    
-    @Autowired 
+
+    @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public BookController(BookRepository repository) {
         this.bookRepository = repository;
@@ -34,6 +38,8 @@ public class BookController {
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String getBooks(Model model) {
         model.addAttribute("books", bookRepository.findAll());
+  /*       jdbcTemplate.execute("Drop table book");
+        jdbcTemplate.execute("Drop table category"); */
         return "booklist";
     }
 
@@ -42,7 +48,7 @@ public class BookController {
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "add";
+        return "add"; 
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -52,13 +58,13 @@ public class BookController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteBook(@PathVariable("id")Long id, Model model) {
+    public String deleteBook(@PathVariable("id") Long id, Model model) {
         bookRepository.deleteById(id);
         return "redirect:../booklist";
     }
 
-    //tehtävä 4
-    @RequestMapping(value= "/edit/{id}", method=RequestMethod.GET)
+    // tehtävä 4
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", bookRepository.findById(bookId));
         model.addAttribute("categories", categoryRepository.findAll());
