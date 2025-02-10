@@ -1,5 +1,8 @@
 package home.jarnobookstore.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import home.jarnobookstore.domain.Book;
 import home.jarnobookstore.domain.BookRepository;
@@ -22,9 +26,6 @@ public class BookController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     public BookController(BookRepository repository) {
         this.bookRepository = repository;
     }
@@ -34,21 +35,21 @@ public class BookController {
         return "index";
     }
 
-    // tehtävä 2
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String getBooks(Model model) {
         model.addAttribute("books", bookRepository.findAll());
-  /*       jdbcTemplate.execute("Drop table book");
-        jdbcTemplate.execute("Drop table category"); */
+        /*
+         * jdbcTemplate.execute("Drop table book");
+         * jdbcTemplate.execute("Drop table category");
+         */
         return "booklist";
     }
 
-    // tehtävä 3
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "add"; 
+        return "add";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -63,11 +64,23 @@ public class BookController {
         return "redirect:../booklist";
     }
 
-    // tehtävä 4
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", bookRepository.findById(bookId));
         model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
+
+    // Get all books as JSON RESTful
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    public @ResponseBody List<Book> bookListRest() {
+        return (List<Book>) bookRepository.findAll();
+    }
+
+    // Find one book by id RESTful
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Book> findBookByIdRest(@PathVariable("id") Long bookId) {
+        return bookRepository.findById(bookId);
+    }
+
 }
