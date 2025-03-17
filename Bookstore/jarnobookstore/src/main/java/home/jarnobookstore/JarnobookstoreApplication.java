@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import home.jarnobookstore.domain.AppUser;
@@ -15,7 +17,12 @@ import home.jarnobookstore.domain.Category;
 import home.jarnobookstore.domain.CategoryRepository;
 
 @SpringBootApplication
-public class JarnobookstoreApplication {
+public class JarnobookstoreApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(JarnobookstoreApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(JarnobookstoreApplication.class, args);
@@ -25,24 +32,24 @@ public class JarnobookstoreApplication {
 
 	@Bean
 	public CommandLineRunner clr(BookRepository bookRepository, CategoryRepository categoryRepository,
-	AppUserRepository appUserRepository) {
+			AppUserRepository appUserRepository) {
 		return (args) -> {
 			/*
 			 * 
-			 appUserRepository.deleteAll();
-			 AppUser user1 = new AppUser("user", "user@user.com",
-			 "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",
-			 "USER");
-			 
-			 AppUser user2 = new AppUser("admin", "admin@admin.com",
-			 "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C",
-			 "ADMIN");
-			 System.out.println("SAVING USER 1");
-			 appUserRepository.save(user1);
-			 System.out.println("SAVING USER 2");
-			 appUserRepository.save(user2);
+			 * appUserRepository.deleteAll();
+			 * AppUser user1 = new AppUser("user", "user@user.com",
+			 * "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",
+			 * "USER");
+			 * 
+			 * AppUser user2 = new AppUser("admin", "admin@admin.com",
+			 * "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C",
+			 * "ADMIN");
+			 * System.out.println("SAVING USER 1");
+			 * appUserRepository.save(user1);
+			 * System.out.println("SAVING USER 2");
+			 * appUserRepository.save(user2);
 			 */
-			 
+
 			log.info("fetch all users");
 			for (AppUser user : appUserRepository.findAll()) {
 				log.info(user.toString());
